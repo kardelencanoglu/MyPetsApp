@@ -1,29 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/paint_bg"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".adoption.AdoptionActivity">
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="95dp"
-            android:gravity="end"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
+        <RelativeLayout
+                android:id="@+id/layoutPicture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp">
 
-        <ImageButton
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/picture"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/logo"
+                    android:layout_centerInParent="true"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabChoosePic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/ic_picture"
+                    app:fabSize="mini"/>
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/layoutName"
+                android:layout_marginTop="270dp"
+                android:layout_below="@id/layoutPicture"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_back_img"
-                android:id="@+id/backButton"
-                android:rotation="180"
-                android:adjustViewBounds="false"/>
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardCornerRadius="0dp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp">
+
+                <TextView
+                        android:text="@string/title_adoption"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/font"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <EditText
+                            android:id="@+id/name"
+                            android:hint="@string/name"
+                            android:fontFamily="@font/font"
+                            android:inputType="textPersonName|textCapWords"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font"
+                            android:layout_marginTop="10dip"
+                            android:text="@string/species"
+                            android:layout_marginBottom="5dp"/>
+
+                    <Spinner
+                            android:id="@+id/species"
+                            android:fontFamily="@font/font"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <EditText
+                            android:id="@+id/breed"
+                            android:hint="@string/breed"
+                            android:fontFamily="@font/font"
+                            android:inputType="textPersonName|textCapWords"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:layout_below="@id/layoutName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardCornerRadius="0dp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp">
+
+                <TextView
+                        android:text="@string/gender"
+                        android:layout_marginLeft="4dp"
+                        android:fontFamily="@font/font"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                <Spinner
+                        android:id="@+id/gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="-3dp"
+                        android:hint="@string/gender"
+                        android:fontFamily="@font/font"
+                        android:inputType="textPersonName" />
+
+                <LinearLayout
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_facebook"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <EditText
+                                android:id="@+id/birth"
+                                android:hint="@string/birth"
+                                android:inputType="date"
+                                android:fontFamily="sans-serif-light"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="695dp"
+                android:gravity="end"
+                android:layout_height="wrap_content">
+
+
+            <ImageButton
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back_img"
+                    android:id="@+id/backButton"
+                    android:rotation="180"
+                    android:adjustViewBounds="false"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
