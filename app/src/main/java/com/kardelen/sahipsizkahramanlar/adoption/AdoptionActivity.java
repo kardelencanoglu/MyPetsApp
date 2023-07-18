@@ -2,6 +2,9 @@ package com.kardelen.sahipsizkahramanlar.adoption;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.*;
@@ -10,6 +13,8 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
+import com.kardelen.sahipsizkahramanlar.login.LoginActivity;
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
@@ -19,15 +24,23 @@ import java.util.List;
 public class AdoptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ImageButton backButton;
-    Spinner species;
+    String name, breed, age, species, gender;
+
+    EditText nameText, breedText, ageText;
+    Button saveButton;
+    Spinner speciesSpinner, genderSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adoption);
 
-        species = findViewById(R.id.species);
+        nameText = findViewById(R.id.name);
+        breedText = findViewById(R.id.breed);
+        ageText = findViewById(R.id.age);
+
         backButton = findViewById(R.id.backButton);
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,36 +50,95 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        // Spinner click listener
-        species.setOnItemSelectedListener(this);
+                name = String.valueOf((nameText.getText()));
+                breed = String.valueOf(breedText.getText());
+                age = String.valueOf(ageText.getText());
+                species = "Stt";
+                gender = "Stt";
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+                if (!name.equals("") && !breed.equals("") && !age.equals("") && !species.equals("") && !gender.equals("")) {
 
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Starting Write and Read data with URL
+                            //Creating array for parameters
+                            String[] field = new String[5];
+                            field[0] = "name";
+                            field[1] = "breed";
+                            field[2] = "age";
+                            field[3] = "speices";
+                            field[4] = "gender";
+                            //Creating array for data
+                            String[] data = new String[5];
+                            data[0] = name;
+                            data[1] = breed;
+                            data[2] = age;
+                            data[3] = species;
+                            data[4] = gender;
+                            PutData putData = new PutData("http://192.168.1.46/loginregister/createpet.php", "POST", field, data);
+                            if (putData.startPut()) {
+                                if (putData.onComplete()) {
+                                    String result = putData.getResult();
+                                    //End ProgressBar (Set visibility to GONE)
+                                    Log.i("PutData", result);
+                                    if(result.equals("Pet Save Success")){
+                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                            //End Write and Read data with URL
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "HATA",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        species.setAdapter(dataAdapter);
+
+        speciesSpinner = findViewById(R.id.species);
+        genderSpinner = findViewById(R.id.gender);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.animalsSpecies, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterSecond = ArrayAdapter.createFromResource(this,
+                R.array.gender, android.R.layout.simple_spinner_item);
+        adapterSecond.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        speciesSpinner.setAdapter(adapter);
+        genderSpinner.setAdapter(adapterSecond);
+
+        speciesSpinner.setOnItemSelectedListener(this);
+        genderSpinner.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        Spinner spinner = (Spinner) parent;
+        if ( spinner.getId() ==R.id.species) {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(this, "Spinner 1: " + item, Toast.LENGTH_SHORT).show();
+        } else if (spinner.getId() == R.id.gender) {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(this, "Spinner 2: " + item, Toast.LENGTH_SHORT).show();
+        }
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

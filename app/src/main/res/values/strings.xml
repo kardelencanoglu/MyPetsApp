@@ -13,4 +13,16 @@
     <string name="birth">Doğum Tarihi</string>
     <string name="title_adoption">Sevimli Dostunu Bize Tanıt!</string>
     <string name="name">Evcil Dostunun Adı</string>
+    <string name="age">Yaş</string>
+
+    <string-array name="animalsSpecies">
+        <item>"Cat"</item>
+        <item>"Dog"</item>
+        <item>"Bird"</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>"Female"</item>
+        <item>"Male"</item>
+    </string-array>
 </resources>

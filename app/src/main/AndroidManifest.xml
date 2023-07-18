@@ -41,7 +41,7 @@
                     android:value=""/>
         </activity>
         <activity
-                android:name="splash.SplashScreen"
+                android:name=".splash.SplashScreen"
                 android:exported="true"
                 android:screenOrientation="portrait">
             <intent-filter>

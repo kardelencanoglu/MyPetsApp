@@ -14,34 +14,33 @@
 
         <RelativeLayout
                 android:id="@+id/layoutPicture"
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="150dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/picture"
+                    android:id="@+id/pet"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/pets_icon"
                     android:layout_centerInParent="true"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <Button
                     android:id="@+id/fabChoosePic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@drawable/ic_picture"
-                    app:fabSize="mini"/>
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/add_image"/>
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/layoutName"
-                android:layout_marginTop="270dp"
+                android:layout_marginTop="180dp"
                 android:layout_below="@id/layoutPicture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +56,7 @@
                         android:text="@string/title_adoption"
                         android:layout_marginLeft="3dp"
                         android:layout_marginBottom="10dp"
-                        android:textSize="20sp"
+                        android:textSize="40sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/font"
                         android:layout_width="wrap_content"
@@ -70,27 +69,31 @@
                             android:id="@+id/name"
                             android:hint="@string/name"
                             android:fontFamily="@font/font"
+                            android:textSize="20sp"
                             android:inputType="textPersonName|textCapWords"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
                     <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/font"
-                            android:layout_marginTop="10dip"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            android:textSize="25sp"
                             android:text="@string/species"
                             android:layout_marginBottom="5dp"/>
 
                     <Spinner
                             android:id="@+id/species"
-                            android:fontFamily="@font/font"
-                            android:layout_width="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -101,6 +104,7 @@
                             android:id="@+id/breed"
                             android:hint="@string/breed"
                             android:fontFamily="@font/font"
+                            android:textSize="20sp"
                             android:inputType="textPersonName|textCapWords"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -126,6 +130,7 @@
                 <TextView
                         android:text="@string/gender"
                         android:layout_marginLeft="4dp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/font"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -149,45 +154,58 @@
 
                     <ImageView
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_facebook"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp" />
+                            android:src="@drawable/pets_age"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginLeft="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                         <EditText
-                                android:id="@+id/birth"
-                                android:hint="@string/birth"
-                                android:inputType="date"
-                                android:fontFamily="sans-serif-light"
+                                android:id="@+id/age"
+                                android:hint="@string/age"
+                                android:inputType="number"
+                                android:textSize="20sp"
+                                android:fontFamily="@font/font"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                 </LinearLayout>
+
+                <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+                        android:id="@+id/saveButton"
+                        style="@style/loginButton"
+                        app:spinning_bar_width="4dp"
+                        app:spinning_bar_color="#FFF"
+                        android:text="Kaydet"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="50dp"
+                        app:spinning_bar_padding="6dp"
+                        app:initialCornerAngle="27dp"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="695dp"
-                android:gravity="end"
+                android:layout_width="35dp"
+                android:layout_marginTop="1100dp"
+                android:gravity="start"
+                android:layout_marginEnd="100dp"
                 android:layout_height="wrap_content">
 
 
             <ImageButton
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_back_img"
                     android:id="@+id/backButton"
-                    android:rotation="180"
-                    android:adjustViewBounds="false"/>
+                    android:adjustViewBounds="true"/>
 
         </RelativeLayout>
 
