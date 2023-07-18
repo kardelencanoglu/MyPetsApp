@@ -56,10 +56,10 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
 
                 name = String.valueOf((nameText.getText()));
-                breed = String.valueOf(breedText.getText());
-                age = String.valueOf(ageText.getText());
-                species = "Stt";
-                gender = "Stt";
+                breed = String.valueOf((breedText.getText()));
+                age = String.valueOf((ageText.getText()));
+                species = String.valueOf(speciesSpinner.getSelectedItem());
+                gender = String.valueOf(genderSpinner.getSelectedItem());
 
                 if (!name.equals("") && !breed.equals("") && !age.equals("") && !species.equals("") && !gender.equals("")) {
 
@@ -82,7 +82,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                             data[2] = age;
                             data[3] = species;
                             data[4] = gender;
-                            PutData putData = new PutData("http://192.168.1.46/loginregister/createpet.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.0.17/loginregister/createpet.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
@@ -132,7 +132,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
-        if ( spinner.getId() ==R.id.species) {
+        if ( spinner.getId() == R.id.species) {
             String item = parent.getItemAtPosition(position).toString();
             Toast.makeText(this, "Spinner 1: " + item, Toast.LENGTH_SHORT).show();
         } else if (spinner.getId() == R.id.gender) {
