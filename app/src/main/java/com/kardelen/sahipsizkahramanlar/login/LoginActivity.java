@@ -6,19 +6,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.otp.OtpActivity;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+import es.dmoral.toasty.Toasty;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText textInputEditTextUserName, textInputEditTextPassword;
+    EditText textInputEditTextEmail, textInputEditTextPassword;
     Button buttonLogin;
 
 
@@ -29,21 +31,23 @@ public class LoginActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
         textInputEditTextPassword = findViewById(R.id.passwordLogin);
-        textInputEditTextUserName = findViewById(R.id.usernameLogin);
+        textInputEditTextEmail = findViewById(R.id.emailLogin);
         buttonLogin = findViewById(R.id.cirLoginButton);
-
+        Intent intent = new Intent(this, OtpActivity.class);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String username, password;
-                username = String.valueOf(textInputEditTextUserName.getText());
+                String email, password;
+                email = String.valueOf(textInputEditTextEmail.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
 
-                if (!username.equals("") && !password.equals("")) {
+                if (!email.equals("") && !password.equals("")) {
 
                     //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -53,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
                             //Starting Write and Read data with URL
                             //Creating array for parameters
                             String[] field = new String[2];
-                            field[0] = "username";
+                            field[0] = "email";
                             field[1] = "password";
                             //Creating array for data
                             String[] data = new String[2];
-                            data[0] = username;
+                            data[0] = email;
                             data[1] = password;
                             PutData putData = new PutData("http://192.168.1.46/loginregister/login.php", "POST", field, data);
                             if (putData.startPut()) {
@@ -66,12 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                                     //End ProgressBar (Set visibility to GONE)
                                     Log.i("PutData", result);
                                     if(result.equals("Login Success")){
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), OtpActivity.class);
+                                        Toasty.success(getApplicationContext(), " Login Success!", Toast.LENGTH_SHORT, true).show();
+                                        intent.putExtra("email", email);
                                         startActivity(intent);
                                     }
                                     else {
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        Toasty.error(getApplicationContext(), "Your Email Or Password Is Incorrect!", Toast.LENGTH_SHORT, true).show();
                                     }
                                 }
                             }
@@ -80,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     });
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "HATA",Toast.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(), "Please Fill In The Blank Fields!", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });

@@ -1,19 +1,19 @@
 package com.kardelen.sahipsizkahramanlar.otp;
 
+import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.chaos.view.PinView;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
-import com.kardelen.sahipsizkahramanlar.adoption.AdoptionActivity;
+import es.dmoral.toasty.Toasty;
+
 
 public class OtpActivity extends AppCompatActivity  implements PostRequestTask.OnPostRequestListener{
 
@@ -27,18 +27,20 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_otp);
         otpText = findViewById(R.id.otpInput);
         authButton = findViewById(R.id.otpButton);
         resendOtp = findViewById(R.id.resendOtp);
 
 
-        Intent intent = new Intent(this, MainActivity.class);
 
-        String serverUrl = "https://otp-server-li85.onrender.com/sendotp";
-
-        // İstek gönderilecek email adresi
-        String email = "dev.ahmettopak@gmail.com";
+        String email = "";
+        String serverUrl = "https://kardelen-service.onrender.com/sendotp";
+        if (getIntent().hasExtra("email")) {
+            email = getIntent().getStringExtra("email");
+            Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        }
 
         // PostRequestTask'i başlat
         PostRequestTask postRequestTask = new PostRequestTask(email, this);
@@ -48,11 +50,13 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
             public void onClick(View v) {
                 otp = otpText.getText().toString();
                 if (otp.equals(recOtp)){
-                    Toast.makeText(OtpActivity.this, "Hoşgeldiniz", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), "Verification Success!", Toast.LENGTH_SHORT, true).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(OtpActivity.this, "Girdiğiniz OTP Kodu Hatalı!" + otp, Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Verification Failed!", Toast.LENGTH_SHORT, true).show();
+
                 }
             }
         });
@@ -62,6 +66,7 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
             @Override
             public void onClick(View v) {
                 try {
+                    Toasty.info(getApplicationContext(), "Check Your Email!", Toast.LENGTH_SHORT, true).show();
                     postRequestTask.execute(serverUrl);
                 }
                 catch (IllegalStateException e){
