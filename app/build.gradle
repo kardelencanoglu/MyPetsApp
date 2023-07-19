@@ -42,4 +42,5 @@ dependencies {
     implementation 'com.github.leandroborgesferreira:loading-button-android:2.3.0'
     implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'io.github.chaosleung:pinview:1.4.4'
 }

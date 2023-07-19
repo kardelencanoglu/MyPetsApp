@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
+import com.kardelen.sahipsizkahramanlar.otp.OtpActivity;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class LoginActivity extends AppCompatActivity {
@@ -66,9 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.i("PutData", result);
                                     if(result.equals("Login Success")){
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), OtpActivity.class);
                                         startActivity(intent);
-                                        finish();
                                     }
                                     else {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
