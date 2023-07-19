@@ -17,6 +17,13 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
     <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
 
     <!--styles for app-->

@@ -18,6 +18,7 @@ import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.login.LoginActivity;
 import com.kardelen.sahipsizkahramanlar.otp.CreatePetPostRequestTask;
 import com.kardelen.sahipsizkahramanlar.otp.PostRequestTask;
+import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
@@ -43,7 +44,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Utils.setUpFullscreen(getWindow().getDecorView());
         setContentView(R.layout.activity_adoption);
 
 
@@ -145,6 +146,11 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
         } else {
             Toasty.error(getApplicationContext(), "An Unknown Error Occurred Try Again!" + result, Toast.LENGTH_SHORT, true).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
 }

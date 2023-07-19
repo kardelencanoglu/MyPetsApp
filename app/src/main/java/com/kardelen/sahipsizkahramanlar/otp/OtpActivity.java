@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
+import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import es.dmoral.toasty.Toasty;
 
 
@@ -27,13 +28,12 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Utils.setUpFullscreen(getWindow().getDecorView());
         setContentView(R.layout.activity_otp);
+
         otpText = findViewById(R.id.otpInput);
         authButton = findViewById(R.id.otpButton);
         resendOtp = findViewById(R.id.resendOtp);
-
-
 
         String email = "";
         String serverUrl = "https://kardelen-service.onrender.com/sendotp";
@@ -84,5 +84,10 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
         int number = Integer.parseInt(result);
         System.out.println(number);
         recOtp = result;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

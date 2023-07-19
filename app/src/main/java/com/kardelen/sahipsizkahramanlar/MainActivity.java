@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.kardelen.sahipsizkahramanlar.adoption.AdoptionActivity;
+import com.kardelen.sahipsizkahramanlar.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Utils.setUpFullscreen(getWindow().getDecorView());
         setContentView(R.layout.activity_main);
 
         adoption = findViewById(R.id.adopting);
@@ -37,9 +38,16 @@ public class MainActivity extends AppCompatActivity {
         ownership.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    adoption.setBackgroundResource(R.drawable.light_rose_button);
+                Intent intent = new Intent(getApplicationContext(), ListPetActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 

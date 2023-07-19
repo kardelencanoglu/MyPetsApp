@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
+import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Utils.setUpFullscreen(getWindow().getDecorView());
         setContentView(R.layout.activity_register);
         changeStatusBarColor();
 
@@ -108,9 +109,10 @@ public class RegisterActivity extends AppCompatActivity {
     public void onLoginClick(View view){
         startActivity(new Intent(this,LoginActivity.class));
         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
-
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+    }
 }
