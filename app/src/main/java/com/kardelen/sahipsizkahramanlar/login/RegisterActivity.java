@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                             data[1] = username;
                             data[2] = password;
                             data[3] = email;
-                            PutData putData = new PutData("http://192.168.1.46/loginregister/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.0.17/loginregister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();

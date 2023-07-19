@@ -38,7 +38,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
 
     EditText nameText, breedText, ageText;
     Button saveButton;
-    String serverUrl = "http://192.168.1.46/loginregister/createpet.php";
+    String serverUrl = "http://192.168.0.17/loginregister/createpet.php";
     Spinner speciesSpinner, genderSpinner;
 
     @Override
