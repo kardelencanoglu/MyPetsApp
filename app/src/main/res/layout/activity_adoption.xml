@@ -21,14 +21,14 @@
                 android:layout_marginTop="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/pet"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/pets_icon"
-                    android:layout_centerInParent="true"/>
+                android:id="@+id/petImage"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/paw" />
 
             <Button
-                    android:id="@+id/fabChoosePic"
+                    android:id="@+id/btnUpload"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentBottom="true"
