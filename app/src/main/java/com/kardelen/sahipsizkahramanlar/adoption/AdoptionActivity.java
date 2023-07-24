@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.*;
 
 import androidx.activity.result.ActivityResult;
@@ -28,26 +23,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kardelen.sahipsizkahramanlar.ListPetActivity;
+import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
-import com.kardelen.sahipsizkahramanlar.login.LoginActivity;
 import com.kardelen.sahipsizkahramanlar.otp.CreatePetPostRequestTask;
-import com.kardelen.sahipsizkahramanlar.otp.PostRequestTask;
-import com.kardelen.sahipsizkahramanlar.splash.SplashScreen;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
-import com.vishnusivadas.advanced_httpurlconnection.PutData;
-import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.*;
 
 public class AdoptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreatePetPostRequestTask.OnPostRequestListener {
@@ -57,7 +41,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
     ImageView imageView;
     EditText nameText, breedText, ageText;
     Button saveButton, uploadButton;
-    String serverUrl = "http://192.168.1.55/loginregister/createpet.php";
+    String serverUrl = "http://192.168.1.46/loginregister/createpet.php";
     Spinner speciesSpinner, genderSpinner;
 
     Bitmap bitmap;
@@ -113,7 +97,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                     final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url ="http://192.168.1.55/loginregister/upload.php";
+                    String url ="http://192.168.1.46/loginregister/upload.php";
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {

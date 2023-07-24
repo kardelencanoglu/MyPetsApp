@@ -1,17 +1,12 @@
 package com.kardelen.sahipsizkahramanlar;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.bumptech.glide.Glide;
 import com.kardelen.sahipsizkahramanlar.adoption.AdoptionActivity;
+import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {

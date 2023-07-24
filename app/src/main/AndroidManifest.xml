@@ -20,7 +20,7 @@
             android:usesCleartextTraffic="true"
             tools:targetApi="31">
         <activity
-                android:name=".ListPetActivity"
+                android:name=".pet.ListPetActivity"
                 android:theme="@style/AppTheme.FullScreen"
                 android:screenOrientation="portrait"
                 android:exported="false">
