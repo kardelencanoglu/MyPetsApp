@@ -26,7 +26,6 @@ public class ListPetActivity extends AppCompatActivity {
     public ArrayAdapter<String> adapter;
     public ArrayList<String> dataList;
 
-    GetApiDataTask getApiDataTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
