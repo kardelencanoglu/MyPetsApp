@@ -73,14 +73,6 @@
                         android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <TextView-->
-<!--                    style="@style/viewParent"-->
-<!--                    android:text="Forgot Password?"-->
-<!--                    android:textColor="@color/roseColor"-->
-<!--                    android:textSize="@dimen/newsMoreTextSize"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:layout_marginTop="10dp"/>-->
-
             <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                     android:id="@+id/cirLoginButton"
                     style="@style/loginButton"

@@ -19,6 +19,7 @@ import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+import es.dmoral.toasty.Toasty;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "HATA",Toast.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(), "Please Fill All Information!",Toast.LENGTH_SHORT).show();
                 }
             }
         });

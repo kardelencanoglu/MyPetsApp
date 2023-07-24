@@ -5,15 +5,15 @@
     <string name="login_username_hint">Username</string>
     <string name="username_hint">Username</string>
     <string name="fullname_hint">Fullname</string>
-    <string name="ownership">Hayvan Sahiplenmek İstiyorum!</string>
-    <string name="adopting">Hayvan Sahiplendirmek İstiyorum!</string>
-    <string name="species">Türü</string>
-    <string name="breed">Cinsi</string>
-    <string name="gender">Cinsiyet</string>
+    <string name="ownership">I Want to Adopt an Animal!</string>
+    <string name="adopting">I Want To Be A Home For A Pet!</string>
+    <string name="species">Species</string>
+    <string name="breed">Breed</string>
+    <string name="gender">Gender</string>
     <string name="birth">Doğum Tarihi</string>
-    <string name="title_adoption">Sevimli Dostunu Bize Tanıt!</string>
-    <string name="name">Evcil Dostunun Adı</string>
-    <string name="age">Yaş</string>
+    <string name="title_adoption">Introduce Your Cute Friend to Us!</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
 
     <string-array name="animalsSpecies">
         <item>"Cat"</item>

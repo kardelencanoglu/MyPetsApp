@@ -36,7 +36,8 @@ public class ListPetActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         dataList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+        adapter = new ArrayAdapter<>(this, R.layout.custom_adapter_view, dataList);
+
         listView.setAdapter(adapter);
 
         new GetApiDataTask(this).execute("http://192.168.1.46/loginregister/getpets.php");
