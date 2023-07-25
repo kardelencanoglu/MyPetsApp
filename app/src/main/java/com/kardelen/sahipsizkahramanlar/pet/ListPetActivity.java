@@ -1,13 +1,17 @@
 package com.kardelen.sahipsizkahramanlar.pet;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
@@ -24,13 +28,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListPetActivity extends AppCompatActivity {
 
-    public ListView listView;
-    public ArrayAdapter<String> adapter;
-    public ArrayList<String> dataList;
     Button mainButton;
+
+    private static final String apiurl="http://192.168.1.46/androidpets/json_user_fetch.php";
+    ListView lv;
+    private static String name[];
+    private static String  breed[];
+    private static String species[];
+    private static String age[];
+    private static String img[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,7 @@ public class ListPetActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_list_pet);
         Utils.setUpFullscreen(getWindow().getDecorView());
+
 
         mainButton = findViewById(R.id.mainButton);
         mainButton.setOnClickListener(new View.OnClickListener() {
@@ -49,14 +60,19 @@ public class ListPetActivity extends AppCompatActivity {
             }
         });
 
+        lv=(ListView)findViewById(R.id.lv);
 
-        listView = findViewById(R.id.listView);
-        dataList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, R.layout.custom_adapter_view, dataList);
+        fetch_data_into_array(lv);
 
-        listView.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String s = lv.getItemAtPosition(position).toString();
 
-        new GetApiDataTask(this).execute("http://192.168.1.46/loginregister/getpets.php");
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -64,81 +80,145 @@ public class ListPetActivity extends AppCompatActivity {
 
     }
 
+    public void fetch_data_into_array(View view)
+    {
 
-}
+        class  dbManager extends AsyncTask<String,Void,String>
+        {
+            protected void onPostExecute(String data)
+            {
+                try {
+                    JSONArray ja = new JSONArray(data);
+                    JSONObject jo = null;
 
-class GetApiDataTask extends AsyncTask<String, Void, String> {
+                    name = new String[ja.length()];
+                    breed = new String[ja.length()];
+                    species = new String[ja.length()];
+                    age = new String[ja.length()];
+                    img = new String[ja.length()];
 
-    ListPetActivity listPetActivity;
+                    for (int i = 0; i < ja.length(); i++) {
+                        jo = ja.getJSONObject(i);
+                        name[i] = jo.getString("name");;
+                        breed[i] = jo.getString("breed");
+                        species[i] = jo.getString("species");;
+                        age[i] = jo.getString("age");
+                        img[i] ="http://192.168.1.46/androidpets/images/" + jo.getString("image");;
+                    }
 
-    public GetApiDataTask(ListPetActivity activity) {
-        this.listPetActivity = activity;
-    }
 
-    @Override
-    protected String doInBackground(String... urls) {
-        String result = "";
-        HttpURLConnection connection = null;
 
-        try {
-            URL url = new URL(urls[0]);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+                    myadapter adptr = new myadapter(getApplicationContext(), name, breed,species,age, img);
+                    lv.setAdapter(adptr);
 
-            // Bağlantıyı başlatın
-            connection.connect();
-
-            // API'dan gelen veriyi okuyun
-            InputStream inputStream = connection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
-            result = stringBuilder.toString();
+            @Override
+            protected String doInBackground(String... strings)
+            {
+                try {
+                    URL url = new URL(strings[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-        } catch (IOException e) {
-            Log.e("GetApiDataTask", "Error: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
+                    StringBuffer data = new StringBuffer();
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        data.append(line + "\n");
+                    }
+                    br.close();
+
+                    return data.toString();
+
+                } catch (Exception ex) {
+                    return ex.getMessage();
+                }
+
             }
+
         }
+        dbManager obj=new dbManager();
+        obj.execute(apiurl);
 
-        return result;
     }
 
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
+    class myadapter extends ArrayAdapter<String>
+    {
+        Context context;
+        String name1[];
+        String breed1[];
+        String species1[];
+        String age1[];
+        String rimg[];
 
-        try {
-            // JSON veriyi ekrana yazdır
-            JSONObject jsonObject = new JSONObject(result);
-            Log.e("JSON Data", "Data: " + jsonObject);
-            JSONArray dataArray = jsonObject.getJSONArray("data");
+        myadapter(Context c, String name1[], String breed1[], String species1[],String age1[],String rimg[])
+        {
+            super(c,R.layout.row,name1);
+            context=c;
+            this.name1=name1;
+            this.breed1=breed1;
+            this.species1=species1;
+            this.age1=age1;
+            this.rimg=rimg;
+        }
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+        {
+            LayoutInflater inflater=(LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row=inflater.inflate(R.layout.row,parent,false);
 
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject dataObject = dataArray.getJSONObject(i);
-                String name = dataObject.getString("name");
-                String breed = dataObject.getString("breed");
-                String age = dataObject.getString("age");
-                String species = dataObject.getString("species");
-                String gender = dataObject.getString("gender");
+            ImageView img=row.findViewById(R.id.img1);
+            TextView nameText=row.findViewById(R.id.nameText);
+            TextView breedText=row.findViewById(R.id.breedText);
+            TextView speciesText=row.findViewById(R.id.speciesText);
+            TextView ageText=row.findViewById(R.id.ageText);
 
-                // Veriyi birleştirin ve dataList'e ekleyin
-                String listItem = "Name: " + name + "\nBreed: " + breed + "\nAge: " + age + "\nSpecies: " + species + "\nGender: " + gender;
-                listPetActivity.dataList.add(listItem);
+
+            nameText.setText(name1[position]);
+            breedText.setText(breed1[position]);
+            speciesText.setText(species1[position]);
+            ageText.setText(age1[position]);
+            String url=rimg[position];
+
+
+            class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+                private String url;
+                private ImageView imageView;
+
+                public ImageLoadTask(String url, ImageView imageView) {
+                    this.url = url;
+                    this.imageView = imageView;
+                }
+
+                @Override
+                protected Bitmap doInBackground(Void... params) {
+                    try {
+                        URL connection = new URL(url);
+                        InputStream input = connection.openStream();
+                        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                        Bitmap resized = Bitmap.createScaledBitmap(myBitmap, 400, 400, true);
+                        return resized;
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                    return null;
+                }
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    super.onPostExecute(result);
+                    imageView.setImageBitmap(result);
+                }
             }
+            ImageLoadTask obj=new ImageLoadTask(url,img);
+            obj.execute();
 
-            // Değişiklikleri adapter'a bildirin ve ListView'i güncelleyin
-            listPetActivity.adapter.notifyDataSetChanged();
-            //     textView.setText(jsonObject.toString(4));
-        } catch (JSONException e) {
-            Log.e("JSON Parsing", "Error: " + e.getMessage());
+            return row;
         }
     }
+
 }

@@ -7,11 +7,12 @@
         tools:context=".pet.ListPetActivity"
         android:orientation="vertical">
 
-
         <ListView
-                android:id="@+id/listView"
+                android:id="@+id/lv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:visibility="visible"
+
+                android:layout_height="match_parent" />
 
         <Button
                 android:layout_width="100dp"

@@ -1,7 +1,9 @@
 package com.kardelen.sahipsizkahramanlar.adoption;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -17,31 +19,47 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.otp.CreatePetPostRequestTask;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import es.dmoral.toasty.Toasty;
+import okhttp3.*;
 
-import java.io.ByteArrayOutputStream;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+
+import com.google.gson.Gson;
+
+import java.io.File;
 import java.io.IOException;
-import java.util.*;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+
 
 public class AdoptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreatePetPostRequestTask.OnPostRequestListener {
-
+    Uri uri;
     Button backButton;
     String name, breed, age, species, gender;
     ImageView imageView;
     EditText nameText, breedText, ageText;
     Button saveButton, uploadButton;
-    String serverUrl = "http://192.168.1.46/loginregister/createpet.php";
+    String serverUrl = "http://192.168.1.46/androidpets/index.php";
     Spinner speciesSpinner, genderSpinner;
 
     Bitmap bitmap;
@@ -67,7 +85,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                     public void onActivityResult(ActivityResult result) {
                        if(result.getResultCode() == Activity.RESULT_OK){
                            Intent data = result.getData();
-                           Uri uri = data.getData();
+                           uri = data.getData();
                            try {
                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                                imageView.setImageBitmap(bitmap);
@@ -123,8 +141,8 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
 
-                ByteArrayOutputStream byteArrayOutputStream;
-                byteArrayOutputStream = new ByteArrayOutputStream();
+//                ByteArrayOutputStream byteArrayOutputStream;
+//                byteArrayOutputStream = new ByteArrayOutputStream();
 
                 int age;
                 String name = String.valueOf(nameText.getText());
@@ -142,53 +160,134 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                 String ageString = age + "";
 
                 if(!name.equals("") && !breed.equals("") && !ageString.equals("") && !species.equals("") && !gender.equals("") && bitmap != null) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
-                    byte [] bytes = byteArrayOutputStream.toByteArray();
-                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
+//                    byte [] bytes = byteArrayOutputStream.toByteArray();
+//                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
 
-                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url ="http://192.168.1.46/loginregister/upload.php";
+                    //RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                    String url ="http://192.168.1.46/androidpets/index.php?add=333";
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if(response.equals("success")){
-                                        Toasty.success(getApplicationContext(), "Image Upload!", Toast.LENGTH_SHORT, true).show();
-                                    }
-                                    else  Toasty.error(getApplicationContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT, true).show();
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toasty.error(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT, true).show();
-                        }
-                    }){
-                        protected Map<String, String> getParams(){
-                            Map<String, String> paramV = new HashMap<>();
-                            paramV.put("image", base64Image);
-                            return paramV;
-                        }
-                    };
-                    queue.add(stringRequest);
-                    CreatePetPostRequestTask createPetPostRequestTask = new CreatePetPostRequestTask(name,
-                            breed,
-                            age,
-                            species,
-                            gender,
-                            AdoptionActivity.this);
+//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+//                            new Response.Listener<String>() {
+//                                @Override
+//                                public void onResponse(String response) {
+//                                    if(true){
+//                                        Toasty.success(getApplicationContext(), "Image Upload!", Toast.LENGTH_SHORT, true).show();
+//                                    }
+//                                    else  Toasty.error(getApplicationContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT, true).show();
+//                                }
+//                            }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            Toasty.error(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT, true).show();
+//                        }
+//                    }){
+//                        protected Map<String, String> getParams(){
+//                            Map<String, String> paramV = new HashMap<>();
+//                            paramV.put("upload", base64Image);
+//                            paramV.put("name", "base64Image");
+//                            paramV.put("breed", "base64Image");
+//                            paramV.put("age", "2");
+//                            paramV.put("species", "base64Image");
+//
+//                            return paramV;
+//                        }
+//                    };
+                    //queue.add(stringRequest);
+
+
+//                    CreatePetPostRequestTask createPetPostRequestTask = new CreatePetPostRequestTask(name,
+//                            breed,
+//                            age,
+//                            species,
+//                            gender,
+//                            AdoptionActivity.this);
+//                    try {
+//                        createPetPostRequestTask.execute(serverUrl);
+//                    } catch (IllegalStateException e) {
+//                        Log.d("OTP", e + "");
+//                    }
+
+                    Pet pet = new Pet(name, breed, species, age+"");
+
+                    uploadImageToServer(getApplicationContext(),uri, pet);
+
+                    Intent intent = new Intent(getApplicationContext(), ListPetActivity.class);
+                    Toasty.success(getApplicationContext(), "Save Success!", Toast.LENGTH_SHORT, true).show();
                     try {
-                        createPetPostRequestTask.execute(serverUrl);
-                    } catch (IllegalStateException e) {
-                        Log.d("OTP", e + "");
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
+                    startActivity(intent);
+                    finish();
+
                 } else {
                     Toasty.error(getApplicationContext(), "Please Fill All Information!", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
     }
+    public static void uploadImageToServer(Context context, Uri imageUri, Pet pet) {
+        File imageFile = new File(getRealPathFromURI(context, imageUri));
 
+        OkHttpClient client = new OkHttpClient();
+
+        // Resim dosyasını oluşturun
+        RequestBody imageBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+
+        // Diğer özellikleri JSON verisi olarak oluşturun
+        Gson gson = new Gson();
+        String petJson = gson.toJson(pet);
+        RequestBody dataBody = RequestBody.create(MediaType.parse("application/json"), petJson);
+
+        // Resim ve diğer özellikleri birleştirin
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("upload", imageFile.getName(), imageBody)
+                .addFormDataPart("name", pet.getName())
+                .addFormDataPart("breed", pet.getBreed())
+                .addFormDataPart("species", pet.getSpecies())
+                .addFormDataPart("age", pet.getAge())
+                .build();
+
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url("http://192.168.1.46/androidpets/index.php?add=333")
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Sunucuya gönderme hatası
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                // Sunucudan yanıt alma işlemleri
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+
+                    // Sunucudan gelen yanıtı burada işleyebilirsiniz.
+                } else {
+                    // Sunucudan hatalı yanıt alındığında burası çalışır.
+                }
+            }
+        });
+    }
+    public static String getRealPathFromURI(Context context, Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -210,7 +309,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
         Log.d("TAG", "onPostRequestCompleted: " + result);
 
         Intent i = new Intent(AdoptionActivity.this, ListPetActivity.class);
-        if(Objects.equals(result, "Pet Save Success")){
+        if(true){
             Toasty.success(getApplicationContext(), "Pet Save Success!", Toast.LENGTH_SHORT, true).show();
             startActivity(i);
             finish();
@@ -223,5 +322,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
     public void onBackPressed() {
 
     }
+
+
 
 }
