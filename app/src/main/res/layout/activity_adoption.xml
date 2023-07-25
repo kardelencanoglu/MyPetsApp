@@ -193,19 +193,18 @@
 
 
         <RelativeLayout
-                android:layout_width="35dp"
-                android:layout_marginTop="1100dp"
+                android:layout_width="100dp"
+                android:layout_marginTop="1170dp"
                 android:gravity="start"
-                android:layout_marginEnd="100dp"
+                android:layout_marginStart="700dp"
                 android:layout_height="wrap_content">
 
 
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back_img"
-                    android:id="@+id/backButton"
-                    android:adjustViewBounds="true"/>
+            <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/undo"
+                    android:id="@+id/backButton"/>
 
         </RelativeLayout>
 

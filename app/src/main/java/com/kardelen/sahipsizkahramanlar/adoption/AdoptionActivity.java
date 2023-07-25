@@ -36,7 +36,7 @@ import java.util.*;
 
 public class AdoptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreatePetPostRequestTask.OnPostRequestListener {
 
-    ImageButton backButton;
+    Button backButton;
     String name, breed, age, species, gender;
     ImageView imageView;
     EditText nameText, breedText, ageText;
@@ -80,49 +80,15 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                activityResultLauncher.launch(intent);
             }
         });
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ByteArrayOutputStream byteArrayOutputStream;
-                byteArrayOutputStream = new ByteArrayOutputStream();
-                if(bitmap != null){
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
-                    byte [] bytes = byteArrayOutputStream.toByteArray();
-                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
-
-                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url ="http://192.168.1.46/loginregister/upload.php";
-
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if(response.equals("success")){
-                                        Toasty.success(getApplicationContext(), "Image Upload!", Toast.LENGTH_SHORT, true).show();
-                                    }
-                                    else  Toasty.error(getApplicationContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT, true).show();
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toasty.error(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT, true).show();
-                        }
-                    }){
-                        protected Map<String, String> getParams(){
-                            Map<String, String> paramV = new HashMap<>();
-                            paramV.put("image", base64Image);
-                            return paramV;
-                        }
-                    };
-                    queue.add(stringRequest);
-                }
-                Toasty.warning(getApplicationContext(), "Please Select Image!", Toast.LENGTH_SHORT, true).show();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activityResultLauncher.launch(intent);
             }
         });
 
@@ -156,6 +122,10 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ByteArrayOutputStream byteArrayOutputStream;
+                byteArrayOutputStream = new ByteArrayOutputStream();
+
                 int age;
                 String name = String.valueOf(nameText.getText());
                 String breed = String.valueOf(breedText.getText());
@@ -171,8 +141,36 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
 
                 String ageString = age + "";
 
-                if(!name.equals("") && !breed.equals("") && !ageString.equals("") && !species.equals("") && !gender.equals("")) {
+                if(!name.equals("") && !breed.equals("") && !ageString.equals("") && !species.equals("") && !gender.equals("") && bitmap != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
+                    byte [] bytes = byteArrayOutputStream.toByteArray();
+                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
 
+                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                    String url ="http://192.168.1.46/loginregister/upload.php";
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if(response.equals("success")){
+                                        Toasty.success(getApplicationContext(), "Image Upload!", Toast.LENGTH_SHORT, true).show();
+                                    }
+                                    else  Toasty.error(getApplicationContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT, true).show();
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toasty.error(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT, true).show();
+                        }
+                    }){
+                        protected Map<String, String> getParams(){
+                            Map<String, String> paramV = new HashMap<>();
+                            paramV.put("image", base64Image);
+                            return paramV;
+                        }
+                    };
+                    queue.add(stringRequest);
                     CreatePetPostRequestTask createPetPostRequestTask = new CreatePetPostRequestTask(name,
                             breed,
                             age,

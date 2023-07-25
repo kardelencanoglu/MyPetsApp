@@ -1,11 +1,16 @@
 package com.kardelen.sahipsizkahramanlar.pet;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import org.json.JSONArray;
@@ -25,6 +30,7 @@ public class ListPetActivity extends AppCompatActivity {
     public ListView listView;
     public ArrayAdapter<String> adapter;
     public ArrayList<String> dataList;
+    Button mainButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,16 @@ public class ListPetActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_list_pet);
         Utils.setUpFullscreen(getWindow().getDecorView());
+
+        mainButton = findViewById(R.id.mainButton);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         listView = findViewById(R.id.listView);
@@ -47,6 +63,7 @@ public class ListPetActivity extends AppCompatActivity {
     public void onBackPressed() {
 
     }
+
 
 }
 
