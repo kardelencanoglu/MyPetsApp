@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -19,11 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.MainActivity;
@@ -31,14 +25,6 @@ import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.otp.CreatePetPostRequestTask;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 import es.dmoral.toasty.Toasty;
-import okhttp3.*;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,11 +41,10 @@ import okhttp3.RequestBody;
 public class AdoptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreatePetPostRequestTask.OnPostRequestListener {
     Uri uri;
     Button backButton;
-    String name, breed, age, species, gender;
     ImageView imageView;
     EditText nameText, breedText, ageText;
     Button saveButton, uploadButton;
-    String serverUrl = "http://192.168.1.46/androidpets/index.php";
+
     Spinner speciesSpinner, genderSpinner;
 
     Bitmap bitmap;
@@ -141,9 +126,6 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
 
-//                ByteArrayOutputStream byteArrayOutputStream;
-//                byteArrayOutputStream = new ByteArrayOutputStream();
-
                 int age;
                 String name = String.valueOf(nameText.getText());
                 String breed = String.valueOf(breedText.getText());
@@ -160,56 +142,8 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                 String ageString = age + "";
 
                 if(!name.equals("") && !breed.equals("") && !ageString.equals("") && !species.equals("") && !gender.equals("") && bitmap != null) {
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
-//                    byte [] bytes = byteArrayOutputStream.toByteArray();
-//                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
-
-                    //RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url ="http://192.168.1.46/androidpets/index.php?add=333";
-
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-//                            new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//                                    if(true){
-//                                        Toasty.success(getApplicationContext(), "Image Upload!", Toast.LENGTH_SHORT, true).show();
-//                                    }
-//                                    else  Toasty.error(getApplicationContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT, true).show();
-//                                }
-//                            }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            Toasty.error(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT, true).show();
-//                        }
-//                    }){
-//                        protected Map<String, String> getParams(){
-//                            Map<String, String> paramV = new HashMap<>();
-//                            paramV.put("upload", base64Image);
-//                            paramV.put("name", "base64Image");
-//                            paramV.put("breed", "base64Image");
-//                            paramV.put("age", "2");
-//                            paramV.put("species", "base64Image");
-//
-//                            return paramV;
-//                        }
-//                    };
-                    //queue.add(stringRequest);
-
-
-//                    CreatePetPostRequestTask createPetPostRequestTask = new CreatePetPostRequestTask(name,
-//                            breed,
-//                            age,
-//                            species,
-//                            gender,
-//                            AdoptionActivity.this);
-//                    try {
-//                        createPetPostRequestTask.execute(serverUrl);
-//                    } catch (IllegalStateException e) {
-//                        Log.d("OTP", e + "");
-//                    }
 
                     Pet pet = new Pet(name, breed, species, age+"");
-
                     uploadImageToServer(getApplicationContext(),uri, pet);
 
                     Intent intent = new Intent(getApplicationContext(), ListPetActivity.class);

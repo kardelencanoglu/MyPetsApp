@@ -49,7 +49,6 @@ public class ListPetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_pet);
         Utils.setUpFullscreen(getWindow().getDecorView());
 
-
         mainButton = findViewById(R.id.mainButton);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
