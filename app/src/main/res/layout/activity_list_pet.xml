@@ -7,11 +7,21 @@
         tools:context=".pet.ListPetActivity"
         android:orientation="vertical">
 
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CLASSIFIED"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/font"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:gravity="center"/>
+
         <ListView
                 android:id="@+id/lv"
+                android:layout_marginTop="60dp"
                 android:layout_width="match_parent"
-                android:visibility="visible"
-
                 android:layout_height="match_parent" />
 
         <Button

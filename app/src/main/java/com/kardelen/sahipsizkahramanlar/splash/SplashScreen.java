@@ -10,6 +10,7 @@ import com.kardelen.sahipsizkahramanlar.MainActivity;
 import com.kardelen.sahipsizkahramanlar.R;
 import com.kardelen.sahipsizkahramanlar.adoption.AdoptionActivity;
 import com.kardelen.sahipsizkahramanlar.login.LoginActivity;
+import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 
 public class SplashScreen extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+                Intent i = new Intent(SplashScreen.this, ListPetActivity.class);
                 startActivity(i);
                 finish();
             }
