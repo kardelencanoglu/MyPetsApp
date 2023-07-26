@@ -89,9 +89,9 @@
             app:lottie_loop="true"/>
 
     <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/undo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/out"
             android:layout_marginTop="30dp"
             android:layout_marginStart="720dp"
             android:id="@+id/goLoginButton"/>
