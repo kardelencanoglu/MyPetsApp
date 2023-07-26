@@ -78,13 +78,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     //End ProgressBar (Set visibility to GONE)
                                     Log.i("PutData", result);
                                     if(result.equals("Sign Up Success")){
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                   //     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                     else {
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                     //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }

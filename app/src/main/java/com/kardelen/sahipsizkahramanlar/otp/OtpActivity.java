@@ -39,7 +39,7 @@ public class OtpActivity extends AppCompatActivity  implements PostRequestTask.O
         String serverUrl = "https://kardelen-service.onrender.com/sendotp";
         if (getIntent().hasExtra("email")) {
             email = getIntent().getStringExtra("email");
-            Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
         }
 
         // PostRequestTask'i başlat

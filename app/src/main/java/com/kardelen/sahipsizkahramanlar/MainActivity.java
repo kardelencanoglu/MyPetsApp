@@ -2,16 +2,19 @@ package com.kardelen.sahipsizkahramanlar;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.kardelen.sahipsizkahramanlar.adoption.AdoptionActivity;
+import com.kardelen.sahipsizkahramanlar.login.LoginActivity;
 import com.kardelen.sahipsizkahramanlar.pet.ListPetActivity;
 import com.kardelen.sahipsizkahramanlar.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton ownership, adoption; //adoption = sahiplendirme
+    Button goLoginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
 
         adoption = findViewById(R.id.adopting);
         ownership = findViewById(R.id.ownership);
+        goLoginButton = findViewById(R.id.goLoginButton);
+
+        goLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         adoption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

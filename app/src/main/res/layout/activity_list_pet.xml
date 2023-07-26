@@ -25,10 +25,10 @@
                 android:layout_height="match_parent" />
 
         <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="1180dp"
-                android:layout_marginStart="700dp"
+                android:layout_marginStart="735dp"
                 android:background="@drawable/undo"
                 android:id="@+id/mainButton"/>
 

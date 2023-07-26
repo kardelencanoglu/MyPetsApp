@@ -68,7 +68,7 @@ public class ListPetActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = lv.getItemAtPosition(position).toString();
 
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -111,7 +111,7 @@ public class ListPetActivity extends AppCompatActivity {
                     lv.setAdapter(adptr);
 
                 } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -203,7 +203,7 @@ public class ListPetActivity extends AppCompatActivity {
                         Bitmap resized = Bitmap.createScaledBitmap(myBitmap, 400, 400, true);
                         return resized;
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                     }
                     return null;
                 }
