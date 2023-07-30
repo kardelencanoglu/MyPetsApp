@@ -5,13 +5,15 @@ public class Pet {
     private String breed;
     private String species;
     private String  age;
+    private String  gender;
 
     // Yapıcı metot
-    public Pet(String name, String breed, String species, String age) {
+    public Pet(String name, String breed, String species, String age, String gender) {
         this.name = name;
         this.breed = breed;
         this.species = species;
         this.age = age;
+        this.gender = gender;
     }
 
     // Getter ve Setter metotları
@@ -22,6 +24,7 @@ public class Pet {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getBreed() {
         return breed;
@@ -37,6 +40,14 @@ public class Pet {
 
     public void setSpecies(String species) {
         this.species = species;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getAge() {

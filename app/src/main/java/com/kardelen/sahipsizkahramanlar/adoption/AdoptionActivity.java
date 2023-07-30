@@ -143,7 +143,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
 
                 if(!name.equals("") && !breed.equals("") && !ageString.equals("") && !species.equals("") && !gender.equals("") && bitmap != null) {
 
-                    Pet pet = new Pet(name, breed, species, age+"");
+                    Pet pet = new Pet(name, breed, species,age+"", gender);
                     uploadImageToServer(getApplicationContext(),uri, pet);
 
                     Intent intent = new Intent(getApplicationContext(), ListPetActivity.class);
@@ -182,11 +182,12 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                 .addFormDataPart("name", pet.getName())
                 .addFormDataPart("breed", pet.getBreed())
                 .addFormDataPart("species", pet.getSpecies())
+                .addFormDataPart("gender", pet.getGender())
                 .addFormDataPart("age", pet.getAge())
                 .build();
 
         okhttp3.Request request = new okhttp3.Request.Builder()
-                .url("http://192.168.0.17/androidpets/index.php?add=333")
+                .url("http://192.168.1.194/androidpets/index.php?add=333")
                 .post(requestBody)
                 .build();
 

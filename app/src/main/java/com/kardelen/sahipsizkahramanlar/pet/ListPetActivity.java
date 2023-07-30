@@ -34,13 +34,14 @@ public class ListPetActivity extends AppCompatActivity {
 
     Button mainButton;
 
-    private static final String apiurl="http://192.168.0.17/androidpets/json_user_fetch.php";
+    private static final String apiurl="http://192.168.1.194/androidpets/json_user_fetch.php";
     ListView lv;
     private static String name[];
     private static String  breed[];
     private static String species[];
     private static String age[];
     private static String img[];
+    private static String gender[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class ListPetActivity extends AppCompatActivity {
                     species = new String[ja.length()];
                     age = new String[ja.length()];
                     img = new String[ja.length()];
+                    gender = new String[ja.length()];
 
                     for (int i = 0; i < ja.length(); i++) {
                         jo = ja.getJSONObject(i);
@@ -102,12 +104,13 @@ public class ListPetActivity extends AppCompatActivity {
                         breed[i] = jo.getString("breed");
                         species[i] = jo.getString("species");;
                         age[i] = jo.getString("age");
-                        img[i] ="http://192.168.0.17/androidpets/images/" + jo.getString("image");;
+                        img[i] ="http://192.168.1.194/androidpets/images/" + jo.getString("image");;
+                        gender[i] = jo.getString("gender");
                     }
 
 
 
-                    myadapter adptr = new myadapter(getApplicationContext(), name, breed,species,age, img);
+                    myadapter adptr = new myadapter(getApplicationContext(), name, breed,species,age, img, gender);
                     lv.setAdapter(adptr);
 
                 } catch (Exception ex) {
@@ -153,8 +156,9 @@ public class ListPetActivity extends AppCompatActivity {
         String species1[];
         String age1[];
         String rimg[];
+        String gender1[];
 
-        myadapter(Context c, String name1[], String breed1[], String species1[],String age1[],String rimg[])
+        myadapter(Context c, String name1[], String breed1[], String species1[],String age1[],String rimg[], String gender1[])
         {
             super(c,R.layout.row,name1);
             context=c;
@@ -163,6 +167,7 @@ public class ListPetActivity extends AppCompatActivity {
             this.species1=species1;
             this.age1=age1;
             this.rimg=rimg;
+            this.gender1=gender1;
         }
         @NonNull
         @Override
@@ -176,6 +181,7 @@ public class ListPetActivity extends AppCompatActivity {
             TextView breedText=row.findViewById(R.id.breedText);
             TextView speciesText=row.findViewById(R.id.speciesText);
             TextView ageText=row.findViewById(R.id.ageText);
+            TextView genderText=row.findViewById(R.id.genderText);
 
 
             nameText.setText(name1[position]);
@@ -183,6 +189,7 @@ public class ListPetActivity extends AppCompatActivity {
             speciesText.setText(species1[position]);
             ageText.setText(age1[position]);
             String url=rimg[position];
+            genderText.setText(gender1[position]);
 
 
             class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
