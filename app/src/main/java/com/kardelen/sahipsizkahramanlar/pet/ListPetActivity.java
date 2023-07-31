@@ -34,7 +34,7 @@ public class ListPetActivity extends AppCompatActivity {
 
     Button mainButton;
 
-    private static final String apiurl="http://192.168.1.194/androidpets/json_user_fetch.php";
+    private static final String apiurl="http://192.168.137.95/androidpets/json_user_fetch.php";
     ListView lv;
     private static String name[];
     private static String  breed[];
@@ -104,7 +104,7 @@ public class ListPetActivity extends AppCompatActivity {
                         breed[i] = jo.getString("breed");
                         species[i] = jo.getString("species");;
                         age[i] = jo.getString("age");
-                        img[i] ="http://192.168.1.194/androidpets/images/" + jo.getString("image");;
+                        img[i] ="http://192.168.137.95/androidpets/images/" + jo.getString("image");;
                         gender[i] = jo.getString("gender");
                     }
 

@@ -187,7 +187,7 @@ public class AdoptionActivity extends AppCompatActivity implements AdapterView.O
                 .build();
 
         okhttp3.Request request = new okhttp3.Request.Builder()
-                .url("http://192.168.1.194/androidpets/index.php?add=333")
+                .url("http://192.168.137.95/androidpets/index.php?add=333")
                 .post(requestBody)
                 .build();
 

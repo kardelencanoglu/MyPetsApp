@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -51,7 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
                 password = String.valueOf(textInputEditTextPassword.getText());
                 email = String.valueOf(textInputEditTextEmail.getText());
 
-                if (!fullname.equals("") && !username.equals("") && !password.equals("") && !email.equals("")) {
+                if (!fullname.equals("") && !username.equals("") && isValidPassword(password) && isValidEmail(email)){
+
+
 
                     //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -71,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                             data[1] = username;
                             data[2] = password;
                             data[3] = email;
-                            PutData putData = new PutData("http://192.168.1.194/loginregister/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.137.95/loginregister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
@@ -84,16 +87,35 @@ public class RegisterActivity extends AppCompatActivity {
                                         finish();
                                     }
                                     else {
-                                     //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        Toasty.info(getApplicationContext(), "This Username or E-mail Address Is Already Registered!",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                             //End Write and Read data with URL
                         }
                     });
-                }
-                else {
-                    Toasty.info(getApplicationContext(), "Please Fill All Information!",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (fullname.equals("")){
+                        Toasty.info(getApplicationContext(), "Fullname Cannot Be Empty!",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if (!isValidEmail(email)) {
+                            Toasty.info(getApplicationContext(), "Cannot Enter Valid Email Address!",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            if (username.equals("")) {
+                                Toasty.info(getApplicationContext(), "Username Cannot Be Empty!",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                if ( !isValidPassword(password)){
+                                    Toasty.info(getApplicationContext(), "Your Password Must Have At Least 6 Digits!",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        }
+
+                    }
+
                 }
             }
         });
@@ -111,6 +133,16 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(new Intent(this,LoginActivity.class));
         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
+
+    public static boolean isValidEmail(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public static boolean isValidPassword(String password) {
+        // Burada şifre için istediğiniz kriterlere göre kontrol sağlayabilirsiniz.
+        // Örneğin, en az bir büyük harf, bir küçük harf, bir sayı ve minimum uzunluk şartı ekleyebilirsiniz.
+        return password.length() >= 6;
+}
 
     @Override
     public void onBackPressed() {
